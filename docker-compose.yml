@@ -1,0 +1,8 @@
+version: '3'
+services:
+  balance:
+    container_name: balance
+    build: ./balance/
+    command: go run main.go
+    ports:
+      - 3000:3000
