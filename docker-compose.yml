@@ -1,8 +1,16 @@
 version: '3'
 services:
+  client:
+    container_name: client
+    build: ./client
+    command: yarn dev
+    ports:
+      - 1000:3000
+    environment:
+      BALANCE_SERVICE_URL: http://localhost:2000
   balance:
     container_name: balance
-    build: ./balance/
+    build: ./balance
     command: go run main.go
     ports:
-      - 3000:3000
+      - 2000:3000

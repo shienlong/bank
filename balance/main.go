@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 )
 
 type Balance struct {
@@ -17,6 +18,7 @@ type Balance struct {
 
 func main() {
 	e := echo.New()
+	e.Use(middleware.CORS())
 
 	e.GET("/", func(c echo.Context) error {
 		uuid, _ := uuid.NewUUID()
