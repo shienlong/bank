@@ -14,3 +14,9 @@ services:
     command: go run main.go
     ports:
       - 2000:3000
+  transfer:
+    container_name: transfer
+    build: ./transfer
+    command: go run main.go
+    ports:
+      - 3000:3000
