@@ -17,8 +17,8 @@ type Balance struct {
 }
 
 func main() {
-	e := echo.New()
-	e.Use(middleware.CORS())
+	e := echo.New()      				// create new echo function named 'e'
+	e.Use(middleware.CORS())			// web servers cross-domain access controls, which enable secure cross-domain data transfers.
 
 	e.GET("/", func(c echo.Context) error {
 		uuid, _ := uuid.NewUUID()
