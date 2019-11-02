@@ -8,6 +8,8 @@ services:
       - 1000:3000
     environment:
       BALANCE_SERVICE_URL: http://localhost:2000
+      TRANSFER_SERVICE_URL: http://localhost:3000
+      LOAD_SERVICE_URL: http://localhost:4000
   balance:
     container_name: balance
     build: ./balance
@@ -20,3 +22,9 @@ services:
     command: go run main.go
     ports:
       - 3000:3000
+  loan:
+    container_name: loan
+    build: ./loan
+    command: go run main.go
+    ports:
+      - 4000:3000
