@@ -1,9 +1,10 @@
 package main
 
 import (
-	"net/http"
 	"math"
 	"math/rand"
+	"net/http"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
@@ -11,9 +12,11 @@ import (
 )
 
 type Balance struct {
-	UUID string `json:"uuid"`
-	Currency string `json:"currency"`
-	Amount float64 `json:"amount"`
+	DateJoined    time.Time `json:"date"`
+	Account_Group string    `json:"account_group"`
+	UUID          string    `json:"uuid"`
+	Currency      string    `json:"currency"`
+	Amount        float64   `json:"amount"`
 }
 
 func main() {
@@ -25,9 +28,10 @@ func main() {
 		amount := rand.Float64() * 1000
 
 		balance := &Balance{
-			UUID: uuid.String(),
-			Currency: "MYR",
-			Amount: math.Ceil(amount * 100)/100,
+			Account_Group: "Saving Account",
+			UUID:          uuid.String(),
+			Currency:      "MYR",
+			Amount:        math.Ceil(amount*100) / 100,
 		}
 
 		return c.JSON(http.StatusOK, balance)
