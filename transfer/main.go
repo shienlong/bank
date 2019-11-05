@@ -1,36 +1,42 @@
 package main
 
 import (
+	"math"
+	"math/rand"
 	"net/http"
-	"strconv"
+	"time"
 
+	"github.com/google/uuid"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
 
-type Transfer struct {
-	Currency string `json:"currency"`
-	Amount float64 `json:"amount"`
+type Balance struct {
+	DateJoined    time.Time `json:"date"`
+	Account_Group string    `json:"account_group"`
+	UUID          string    `json:"uuid"`
+	Currency      string    `json:"currency"`
+	Amount        float64   `json:"amount"`
 }
 
 func main() {
 	e := echo.New()
 	e.Use(middleware.CORS())
 
-	// How to test from the command line
-	// curl -X POST http://localhost:3000 -d "currency=MYR" -d "amount=99.99"
+	e.GET("/", func(c echo.Context) error {
+		uuid, _ := uuid.NewUUID()
+		amount := rand.Float64() * 1000
 
-	e.POST("/", func(c echo.Context) error {
-		currency := c.FormValue("currency")
-		amount, _ := strconv.ParseFloat(c.FormValue("amount"), 64)
-
-		transfer := &Transfer{
-			Currency: currency,
-			Amount: amount,
+		balance := &Balance{
+			Account_Group: "Saving Account",
+			UUID:          uuid.String(),
+			Currency:      "MYR",
+			Amount:        math.Ceil(amount*100) / 100,
 		}
 
-		return c.JSON(http.StatusOK, transfer)
+		return c.JSON(http.StatusOK, balance)
 	})
 
 	e.Logger.Fatal(e.Start(":3000"))
 }
+
